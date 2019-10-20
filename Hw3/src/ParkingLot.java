@@ -30,13 +30,14 @@ public boolean isAvailable(){
     public void Checker(){
  for(int i=0; i < VehicleLicense.size();i++){
    // System.out.println(VehicleLicense.get(i).TimeToLeave());
+     Collections.sort(VehicleLicense,Comparator.comparing(VehicleName::TimeToLeave));
     int value =ParkingLotTime.compareTo(VehicleLicense.get(i).TimeToLeave());
 
     if(value <= 0){
       //  System.out.println("ParkingLot Time is bigger");
     }else{
         RemoveToParkingLot(i);
-        System.out.println("Vehicle "+ VehicleLicense.get(i).NameoFVehicle+" Left on " +VehicleLicense.get(i).TimeToLeave());
+      //  System.out.println("Vehicle "+ VehicleLicense.get(i).NameoFVehicle+" Left on " +VehicleLicense.get(i).TimeToLeave());
     }
 
 
@@ -44,6 +45,62 @@ public boolean isAvailable(){
     }
 
 
+
+
+    public LocalTime LargestTime() {
+        LocalTime Largest = LocalTime.MIDNIGHT;
+        for (int i = 0; i < VehicleLicense.size(); i++) {
+            VehicleLicense.get(i).TimeToLeave();
+            if (i == 0) {
+                Largest = VehicleLicense.get(i).TimeToLeave();
+            }
+            int values = Largest.compareTo(VehicleLicense.get(i).TimeToLeave());
+            if (values < 0) {
+                Largest = VehicleLicense.get(i).TimeToLeave();
+            }
+
+
+        }
+        return Largest;
+    }
+
+    public int Idunno(){
+    int Hours = ParkingLotTime.getHour() * 60;
+    int Minut = ParkingLotTime.getMinute();
+    int finals = Hours + Minut;
+
+    int LargHour = LargestTime().getHour() * 60;
+    int LargMin = LargestTime().getMinute();
+    int LargFinal = LargHour + LargMin;
+
+    int Done = LargFinal-finals;
+   // System.out.println(Done);
+    return Done;
+
+    }
+
+    public void Finisher(){
+
+    for(int i=0; i <= Idunno()+400000;i++){
+        ParkingLotTime = ParkingLotTime.plusMinutes(1);
+        for(int j=0; j < VehicleLicense.size();j++){
+            // System.out.println(VehicleLicense.get(i).TimeToLeave());
+            int value =ParkingLotTime.compareTo(VehicleLicense.get(j).TimeToLeave());
+
+            if(value <= 0){
+                //  System.out.println("ParkingLot Time is bigger");
+            }else{
+
+                System.out.println("Vehicle "+ VehicleLicense.get(j).NameoFVehicle+" Left on " +VehicleLicense.get(j).TimeToLeave());
+                RemoveToParkingLot(j);
+            }
+
+
+        }
+
+    }
+
+    }
 
     public void AddToParkingLot(VehicleName obj){
     VehicleLicense.add(obj);
@@ -72,20 +129,21 @@ public boolean isAvailable(){
 
     public void RemoveToParkingLot(int CarInt) {
 
-
-
     if(!VehicleWaiting.isEmpty()){
         VehicleName temp = VehicleWaiting.get(0);
         temp.TimeEntered = ParkingLotTime;
+       //System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ "Has Left"); System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ "Has Left");
         VehicleLicense.remove(CarInt);
-
+        System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ "Has Left at" + VehicleLicense.get(CarInt).TimeToLeave());
         if (!VehicleWaiting.isEmpty()) {
             AddToParkingLot(temp);
 
 
         }
     }else{
+        System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ " Has Left");
         VehicleLicense.remove(CarInt);
+
     }
 
 
@@ -106,18 +164,6 @@ public boolean isAvailable(){
     public static void main(String args[]) throws FileNotFoundException {
    // System.out.println("");
     ParkingLot parking = new ParkingLot();
-
-   // parking.AddToParkingLot("kevinHuynh");
-   // parking.AddToParkingLot("kevinHuynhs");
-
-
-    //    System.out.print("Parking Lot: ");
-   // parking.PrintParkingLot();
-      //  System.out.print("Waiting: ");
-    //parking.PrintWaiting();
-    //parking.RemoveToParkingLot(1);
-    //System.out.print("Parking Lot: ");
-    //parking.PrintParkingLot();
 
        File file = new File("src\\Hello.txt");
        Scanner sc = new Scanner(file);
@@ -142,12 +188,13 @@ public boolean isAvailable(){
 
 
 
-
+       // parking.Idunno();
+        parking.Finisher();
         for(int i =0; i< Methods.length;i++)
         {
             System.out.print("Hello "+Methods[i]+ " ");
         }
-
+        parking.PrintWaiting();
         parking.PrintParkingLot();
 
        //System.out.println(LocalTime.now().getHour());
