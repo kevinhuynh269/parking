@@ -129,19 +129,30 @@ public boolean isAvailable(){
 
     public void RemoveToParkingLot(int CarInt) {
 
+    int hourss =VehicleLicense.get(CarInt).TimeEntered.getHour() * 60;
+    int Minutess = VehicleLicense.get(CarInt).TimeEntered.getMinute();
+    int finallss = hourss + Minutess;
+
+    int mours = VehicleLicense.get(CarInt).TimeToLeave().getHour() * 60;
+        int Sours = VehicleLicense.get(CarInt).TimeToLeave().getMinute();
+    int minal = mours + Sours;
+    int diff = minal - finallss;
+    VehicleLicense.get(CarInt).minutes = diff;
+       // System.out.println(VehicleLicense.get(CarInt).Price());
+
     if(!VehicleWaiting.isEmpty()){
         VehicleName temp = VehicleWaiting.get(0);
         temp.TimeEntered = ParkingLotTime;
        //System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ "Has Left"); System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ "Has Left");
         VehicleLicense.remove(CarInt);
-        System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ "Has Left at" + VehicleLicense.get(CarInt).TimeToLeave());
+        System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ " Has Left at " + VehicleLicense.get(CarInt).TimeToLeave() +"  $"+ VehicleLicense.get(CarInt).Price());
         if (!VehicleWaiting.isEmpty()) {
             AddToParkingLot(temp);
 
 
         }
     }else{
-        System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ " Has Left");
+        System.out.println(VehicleLicense.get(CarInt).NameoFVehicle+ " Has Left at " + VehicleLicense.get(CarInt).TimeToLeave() +"  $"+ VehicleLicense.get(CarInt).Price());
         VehicleLicense.remove(CarInt);
 
     }
@@ -163,9 +174,15 @@ public boolean isAvailable(){
 
     public static void main(String args[]) throws FileNotFoundException {
    // System.out.println("");
+        System.out.println("This is Kevin's Parking Lot. The Rate is 20 Bucks an Minute :)");
+        System.out.println();
     ParkingLot parking = new ParkingLot();
 
-       File file = new File("src\\Hello.txt");
+        Scanner scanner = new Scanner(System. in);
+        String inputString = scanner. nextLine();
+
+    System.out.println("Please Enter the TextFile that you want to use including the .txt at the end ");
+       File file = new File("src\\" + inputString);
        Scanner sc = new Scanner(file);
        sc.useDelimiter("\\n");
 
@@ -190,12 +207,12 @@ public boolean isAvailable(){
 
        // parking.Idunno();
         parking.Finisher();
-        for(int i =0; i< Methods.length;i++)
-        {
-            System.out.print("Hello "+Methods[i]+ " ");
-        }
-        parking.PrintWaiting();
-        parking.PrintParkingLot();
+   //     for(int i =0; i< Methods.length;i++)
+     //   {
+       //     System.out.print("Hello "+Methods[i]+ " ");
+        //}
+        //parking.PrintWaiting();
+        //parking.PrintParkingLot();
 
        //System.out.println(LocalTime.now().getHour());
         //System.out.println(LocalTime.MIDNIGHT);// returns 00:00

@@ -2,5 +2,5 @@ import java.time.LocalTime;
 
 public abstract class Time {
     public LocalTime TimeEntered;
-    int minutes =0;
+    int minutes;
 }

@@ -3,8 +3,15 @@ import java.time.LocalTime;
 
 public class VehicleName extends Time {
     String NameoFVehicle;
-    BigDecimal k = new BigDecimal(.20*minutes);
-    BigDecimal price = k;
+    //double price = minutes * 20;
+
+    public double Price(){
+        double price;
+        price = minutes * 20;
+        return price;
+    }
+
+
     public float howlongtostay;
 
     public LocalTime TimeToLeave(){
