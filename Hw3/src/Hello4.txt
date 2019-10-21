@@ -1,0 +1,12 @@
+0 one 200
+1 two 4
+2 three 4
+3 four 4
+4 five 4
+5 six 4
+6 seven 10
+7 eight 100
+8 nine 102
+9 ten 13
+10 eleven 14
+11 twelve 15
